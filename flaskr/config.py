@@ -29,6 +29,5 @@ class DevelopmentConfig(Config):
 class TestingConfig(Config):
     """Uses sqlite in memory."""
 
-    DATABASE_URI = environ.get("TEST_DATABASE_URI")
     SQLALCHEMY_DATABASE_URI = environ.get("TEST_DATABASE_URI")
     TESTING = True
