@@ -1,7 +1,10 @@
-from flaskr.config import db
+"""User database model."""
+from flaskr.models.db import db
 
 
 class User(db.Model):
+    """Class of User database model"""
+
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80))

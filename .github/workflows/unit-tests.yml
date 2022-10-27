@@ -9,6 +9,7 @@ jobs:
     
     env:
       FLASK_APP: flaskr/app.py
+      TEST_DATABASE_URI: "sqlite:///:memory:"
 
     strategy:
       matrix:

@@ -27,22 +27,19 @@ Set-ExecutionPolicy Unrestricted -Scope Process
 Linux/MacOS
 
 ```sh
-export FLASK_APP=flaskr/app.py
-export FLASK_DEBUG=true
+export FLASK_APP=flaskr/run.py
 ```
 
 Windows cmd
 
 ```sh
-set FLASK_APP=flaskr/app.py
-set FLASK_DEBUG=true
+set FLASK_APP=flaskr/run.py
 ```
 
 Windows powershell
 
 ```sh
-$env:FLASK_APP = "flaskr/app.py"
-$env:FLASK_APP = "true"
+$env:FLASK_APP = "flaskr/run.py"
 ```
 
 Install app as library in development mode using setuptool
@@ -82,3 +79,23 @@ pytest tests
 ```
 
 <hr />
+
+### Run linter
+
+Pytlint
+
+```sh
+python -m pylint flaskr/** tests/**
+```
+
+Black check
+
+```sh
+python -m black --check .
+```
+
+Black fix
+
+```sh
+python -m black .
+```
