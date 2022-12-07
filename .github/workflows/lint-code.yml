@@ -23,4 +23,4 @@ jobs:
       - name: Lint with black
         run: |
           pip install black
-          python -m black --check .
+          python -m black --check --experimental-string-processing -l 100 .

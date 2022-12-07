@@ -18,8 +18,8 @@ def hello_world() -> str:
 def users() -> Response:
     """Route for getting all users and adding user to database."""
     if request.method == "GET":
-        users = User.query.all()
-        data = [user.as_dict() for user in users]
+        all_users = User.query.all()
+        data = [user.as_dict() for user in all_users]
         return jsonify(data)
 
     if request.method == "POST":
