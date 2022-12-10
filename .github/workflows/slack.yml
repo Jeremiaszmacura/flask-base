@@ -2,9 +2,14 @@ name: Slack notification
 
 on:
   push:
+    branches:
+      - 'master'
+      - 'develop'
 
 jobs:
-  unit-testing:
+  slack:
+    if: ${{ always() && contains(join(needs.*.result, ','), 'success') }}
+    needs: [unit-testing]
     runs-on: ubuntu-20.04
         
     steps:
@@ -14,7 +19,7 @@ jobs:
         with:
           # Slack channel id, channel name, or user id to post message.
           # See also: https://api.slack.com/methods/chat.postMessage#channels
-          channel-id: 'C04EGFLPBFV'
+          channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
           # For posting a rich message using Block Kit
           payload: |
             {
