@@ -4,7 +4,9 @@ on:
   push:
 
 jobs:
+  # Unit test and lints
   unit-testing:
+    if: github.event_name == 'push'
     name: Unit Tests
     uses: ./.github/workflows/unit-tests.yml
     with:
@@ -12,6 +14,7 @@ jobs:
     secrets: inherit
 
   lint-code:
+    if: github.event_name == 'push'
     name: Lint code
     uses: ./.github/workflows/lint-code.yml
     with:
