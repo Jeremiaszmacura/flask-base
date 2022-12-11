@@ -40,10 +40,7 @@ on:
         id: slack
         uses: slackapi/slack-github-action@v1.23.0
         with:
-          # Slack channel id, channel name, or user id to post message.
-          # See also: https://api.slack.com/methods/chat.postMessage#channels
           channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
-          # For posting a rich message using Block Kit
           payload: |
             {
               "text": "Review for Pull Request ${{ github.event.review.pull_request_url }} was submited\nReview state: ${{ github.event.review.state }}"
