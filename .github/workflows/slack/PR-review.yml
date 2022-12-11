@@ -1,0 +1,21 @@
+name: Slack notification on Pull Request Review
+
+on:
+  pull_request_review:
+    types: [submitted]
+
+  jobs:
+    pr-review-submited:
+      runs-on: ubuntu-20.04
+      steps:
+      - name: Post about PR review submited to a Slack channel
+        id: slack
+        uses: slackapi/slack-github-action@v1.23.0
+        with:
+          channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
+          payload: |
+            {
+              "text": "Review for Pull Request ${{ github.event.review.pull_request_url }} was submited\nReview state: ${{ github.event.review.state }}"
+            }
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}

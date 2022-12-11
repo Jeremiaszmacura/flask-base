@@ -6,14 +6,14 @@ on:
 jobs:
   unit-testing:
     name: Unit Tests
-    uses: ./.github/workflows/unit-tests.yml
+    uses: ./.github/workflows/CI/unit-tests.yml
     with:
       job: unit-testing
     secrets: inherit
 
   lint-code:
     name: Lint code
-    uses: ./.github/workflows/lint-code.yml
+    uses: ./.github/workflows/CI/lint-code.yml
     with:
       job: lint-code
     secrets: inherit

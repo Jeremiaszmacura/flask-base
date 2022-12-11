@@ -1,49 +1,19 @@
-name: Slack notification
+name: Slack
 
 on:
-  workflow_run:
-    workflows: ["CI"]
-    branches: ["master", "develop"]
-    types:
-      - completed
+  push:
 
 jobs:
   slack-on-failure:
-    runs-on: ubuntu-20.04
-    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
-    steps:
-      - name: Post about CI failure to a Slack channel
-        id: slack
-        uses: slackapi/slack-github-action@v1.23.0
-        with:
-          # Slack channel id, channel name, or user id to post message.
-          # See also: https://api.slack.com/methods/chat.postMessage#channels
-          channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
-          # For posting a rich message using Block Kit
-          payload: |
-            {
-              "text": "GitHub Action ${{ github.event.workflow_run.name }} result: failure\n${{ github.event.workflow_run.html_url || github.event.workflow_run.url }}"
-            }
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+    name: Slack notification on CI failure
+    uses: ./.github/workflows/slack/CI-on-failure.yml
+    with:
+      job: slack-on-failure
+    secrets: inherit
 
-on:
-  pull_request_review:
-    types: [submitted]
-
-  jobs:
-    approved:
-      if: github.event.review.state == 'approved'
-      runs-on: ubuntu-20.04
-      steps:
-      - name: Post about PR review submited to a Slack channel
-        id: slack
-        uses: slackapi/slack-github-action@v1.23.0
-        with:
-          channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
-          payload: |
-            {
-              "text": "Review for Pull Request ${{ github.event.review.pull_request_url }} was submited\nReview state: ${{ github.event.review.state }}"
-            }
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+  pr-review-submited:
+    name: Slack notification on Pull Request Review
+    uses: ./.github/workflows/slack/PR-review.yml
+    with:
+      job: pr-review-submited
+    secrets: inherit
