@@ -35,8 +35,8 @@ jobs:
             }
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-  - name: Run echo object
-      run: echo ${{ github.event.workflow_run }}
+    - name: Run echo object
+        run: echo ${{ github.event.workflow_run }}
 
 # on:
 #   pull_request_review:
