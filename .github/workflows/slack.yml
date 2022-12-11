@@ -1,66 +1,36 @@
 name: Slack notification
 
 on:
-  push:
-    branches:
-      - 'master'
-      - 'develop'
+  workflow_run:
+    workflows: ["Unit Tests", "Lint code"]
+    types:
+      - completed
+    branches: ["master", "develop"]
 
 jobs:
-
-  unit-testing:
-    runs-on: ubuntu-20.04
-    
-    env:
-      FLASK_APP: flaskr/app.py
-      TEST_DATABASE_URI: "sqlite:///:memory:"
-
-    strategy:
-      matrix:
-        python-version: [3.7, 3.8]
-        
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v1
-        with:
-          python-version: ${{ matrix.python-version }}
-
-      - name: Setup app
-        run: |
-          pip install -e .[test]
-          python setup.py bdist_wheel
-
-      - name: Run unit tests
-        run: pytest tests
-
-  slack:
-    if: ${{ always() && contains(join(needs.*.result, ','), 'success') }}
-    needs: [unit-testing]
-    runs-on: ubuntu-20.04
-        
-    steps:
-      - name: Post to a Slack channel
-        id: slack
-        uses: slackapi/slack-github-action@v1.23.0
-        with:
-          # Slack channel id, channel name, or user id to post message.
-          # See also: https://api.slack.com/methods/chat.postMessage#channels
-          channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
-          # For posting a rich message using Block Kit
-          payload: |
-            {
-              "text": "GitHub Action build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}",
-              "blocks": [
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": "GitHub Action build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+    slack-on-failure:
+      if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+      steps:
+        - name: Post to a Slack channel
+          id: slack
+          uses: slackapi/slack-github-action@v1.23.0
+          with:
+            # Slack channel id, channel name, or user id to post message.
+            # See also: https://api.slack.com/methods/chat.postMessage#channels
+            channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
+            # For posting a rich message using Block Kit
+            payload: |
+              {
+                "text": "GitHub Action build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}",
+                "blocks": [
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": "GitHub Action build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+                    }
                   }
-                }
-              ]
-            }
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+                ]
+              }
+          env:
+            SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
