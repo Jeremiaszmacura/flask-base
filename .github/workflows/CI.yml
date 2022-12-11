@@ -4,16 +4,32 @@ on:
   push:
 
 jobs:
+  # Unit test and lints
   unit-testing:
     name: Unit Tests
-    uses: ./.github/workflows/CI/unit-tests.yml
+    uses: ./.github/workflows/unit-tests.yml
     with:
       job: unit-testing
     secrets: inherit
 
   lint-code:
     name: Lint code
-    uses: ./.github/workflows/CI/lint-code.yml
+    uses: ./.github/workflows/lint-code.yml
     with:
       job: lint-code
+    secrets: inherit
+
+  # Slack
+  slack-on-failure:
+    name: Slack notification on CI failure
+    uses: ./.github/workflows/CI-on-failure.yml
+    with:
+      job: slack-on-failure
+    secrets: inherit
+
+  pr-review-submited:
+    name: Slack notification on Pull Request Review
+    uses: ./.github/workflows/PR-review.yml
+    with:
+      job: pr-review-submited
     secrets: inherit
