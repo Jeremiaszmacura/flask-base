@@ -1,7 +1,11 @@
 name: Unit Tests
 
 on:
-  push:
+  workflow_call:
+    inputs:
+      job:
+        required: true
+        type: string
 
 jobs:
   unit-testing:
