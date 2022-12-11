@@ -1,10 +1,14 @@
 name: Lint code
 
 on:
-  push:
+  workflow_call:
+    inputs:
+      job:
+        required: true
+        type: string
 
 jobs:
-  unit-testing:
+  lint-code:
     runs-on: ubuntu-20.04
 
     steps:

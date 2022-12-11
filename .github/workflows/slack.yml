@@ -2,9 +2,7 @@ name: Slack notification
 
 on:
   workflow_run:
-    workflows: ["Unit Tests", "Lint code"]
-    strategy: wait-all
-    timeout: 5m
+    workflows: ["CI"]
     branches: ["master", "develop"]
     types:
       - completed
