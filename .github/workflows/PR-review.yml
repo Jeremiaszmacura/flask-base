@@ -3,6 +3,8 @@ name: Slack notification on Pull Request Review
 on:
   pull_request_review:
     types: [submitted]
+  pull_request_review_comment:
+    types: [created]
 
 jobs:
   pr-review-submited:
