@@ -6,7 +6,7 @@ def test_request_example(client):
     """Test."""
     response = client.get("/")
     assert response.status_code == 200
-    assert b"Hello, World!" in response.data
+    assert b"Hello, World!!!!!!" in response.data
 
 
 def test_book_model_get(client):
