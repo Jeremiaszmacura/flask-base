@@ -11,7 +11,7 @@ jobs:
       job: unit-testing
     secrets: inherit
 
-    unit-testing:
+    lint-code:
     name: Lint code
     uses: ./.github/workflows/lint-code.yml
     with:
