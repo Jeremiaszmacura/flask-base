@@ -6,6 +6,7 @@ on:
 jobs:
   # Unit test and lints
   unit-testing:
+    if: github.event_name == 'push'
     name: Unit Tests
     uses: ./.github/workflows/unit-tests.yml
     with:
@@ -13,23 +14,9 @@ jobs:
     secrets: inherit
 
   lint-code:
+    if: github.event_name == 'push'
     name: Lint code
     uses: ./.github/workflows/lint-code.yml
     with:
       job: lint-code
-    secrets: inherit
-
-  # Slack
-  slack-on-failure:
-    name: Slack notification on CI failure
-    uses: ./.github/workflows/CI-on-failure.yml
-    with:
-      job: slack-on-failure
-    secrets: inherit
-
-  pr-review-submited:
-    name: Slack notification on Pull Request Review
-    uses: ./.github/workflows/PR-review.yml
-    with:
-      job: pr-review-submited
     secrets: inherit
