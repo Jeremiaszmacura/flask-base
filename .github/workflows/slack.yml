@@ -3,7 +3,7 @@ name: Slack notification
 on:
   workflow_run:
     workflows: ["CI"]
-    branches: ["master", "develop"]
+    branches: ["master", "develop", "slack"]
     types:
       - completed
 
@@ -22,16 +22,27 @@ jobs:
           # For posting a rich message using Block Kit
           payload: |
             {
-              "text": "GitHub Action build result: ${{ github.event.workflow_run }}\n${{ github.event.workflow_run.html_url || github.event.workflow_run.url }}",
+              "text": "GitHub Action build result: ${{ github.event.workflow_run.unit-testing }}\n${{ github.event.workflow_run.html_url || github.event.workflow_run.url }}",
               "blocks": [
                 {
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "GitHub Action build result: ${{ github.event.workflow_run }}\n${{ github.event.workflow_run.html_url || github.event.workflow_run.url }}"
+                    "text": "GitHub Action build result: ${{ github.event.workflow_run.unit-testing }}\n${{ github.event.workflow_run.html_url || github.event.workflow_run.url }}"
                   }
                 }
               ]
             }
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+
+# on:
+#   pull_request_review:
+#     types: [submitted]
+
+#   jobs:
+#   approved:
+#     if: github.event.review.state == 'approved'
+#     runs-on: ubuntu-latest
+#     steps:
+#       - run: echo "This PR was approved"
