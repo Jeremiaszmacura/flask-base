@@ -23,3 +23,6 @@ jobs:
             }
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+      - name: Lint with black
+        run: |
+          echo co jest
