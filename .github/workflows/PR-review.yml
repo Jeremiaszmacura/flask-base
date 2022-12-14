@@ -12,6 +12,12 @@ jobs:
   pr-review-submited:
     runs-on: ubuntu-20.04
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Checkout Pull Request
+        run: hub pr checkout ${{ github.event.issue.number }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Post about PR review submited to a Slack channel
         id: slack
         uses: slackapi/slack-github-action@v1.23.0
