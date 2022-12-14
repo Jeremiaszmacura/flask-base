@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: flask-app
-        image: nanajanashia/k8s-demo-app:v1.0
+        image: flask-app:v1.0
         imagePullPolicy: Never
         ports:
         - containerPort: 3000
@@ -40,11 +40,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: webapp-service
+  name: flask-app-service
 spec:
   type: NodePort
   selector:
-    app: webapp
+    app: flask-app
   ports:
     - protocol: TCP
       port: 3000
