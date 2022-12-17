@@ -35,4 +35,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/devops-workshops:develop
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/flask-base:develop
