@@ -7,4 +7,4 @@ metadata:
 data:
   DB_NAME: dev_database
   DB_PORT: "5432"
-  DB_HOSTNAME: localhost
+  DB_HOSTNAME: postgres
