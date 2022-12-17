@@ -105,6 +105,32 @@ python -m black .
 
 <hr />
 
+### Kubernetes
+
+#### Build flask-app image before run k8 deployments
+
+```sh
+docker build --name postgres_workshops -e POSTGRES_DB=dev_database -e POSTGRES_USER=dev_user -e POSTGRES_PASSWORD=dev_pass -p 5432:5432 -d postgres:14
+```
+
+```sh
+kubectl apply -f .\postgres-config.yaml
+```
+
+```sh
+kubectl apply -f .\postgres-secret.yaml
+```
+
+```sh
+kubectl apply -f .\postgres.yaml  
+```
+
+```sh
+kubectl apply -f .\flask-app.yaml  
+```
+
+<hr />
+
 ### URLs
 
 App
