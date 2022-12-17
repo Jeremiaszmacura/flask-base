@@ -1,2 +1,11 @@
 .git
+.github
+.venv
 README.md
+LICENSE
+pylintrc
+docker-compose.yaml
+flask-app.yaml
+postgres-config.yaml
+postgres-secret.yaml
+postgres.yaml
