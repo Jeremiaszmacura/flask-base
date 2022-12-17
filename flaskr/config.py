@@ -28,7 +28,9 @@ class DevelopmentConfig(Config):
     db_hostname = environ.get("DB_HOSTNAME")
     db_port = environ.get("DB_PORT")
     db_name = environ.get("DB_NAME")
-    SQLALCHEMY_DATABASE_URI = "postgresql://prod_user:prod_password@postgres:5432/prod_db"
+    SQLALCHEMY_DATABASE_URI = (
+        f"postgresql://{db_user}:{db_password}@{db_hostname}:{db_port}/{db_name}"
+    )
 
 
 class TestingConfig(Config):

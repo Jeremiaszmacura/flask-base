@@ -12,7 +12,11 @@ services:
       - 5000:5000
     environment:
       FLASK_DEBUG: 'True'
-      DATABASE_URI: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:5432/${POSTGRES_DB}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_HOSTNAME: database
+      DB_PORT: ${DB_PORT}
+      DB_NAME: ${DB_NAME}
     networks:
       - flask-app-network
     restart: on-failure
@@ -25,9 +29,9 @@ services:
     image: postgres:14
     env_file: .env
     environment:
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
     networks:
       - flask-app-network
     restart: always

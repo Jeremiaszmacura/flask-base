@@ -105,6 +105,22 @@ python -m black .
 
 <hr />
 
+### Docker-compose
+
+Start all containers
+
+```sh
+docker-compose up
+```
+
+Stop all containers
+
+```sh
+docker-compose down
+```
+
+<hr />
+
 ### Kubernetes
 
 Apply k8 resources
@@ -126,14 +142,6 @@ kubectl delete -f .\flask-app.yaml
 ```
 
 <hr />
-
-### Show node description to get IP adress to access web app running on k8 pod
-
-Through ```INTERNAL-IP``` given by below command we can access out web app
-
-```sh
-kubectl get node -o wide
-```
 
 ### Build flask-app image
 
