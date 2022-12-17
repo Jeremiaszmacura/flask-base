@@ -107,26 +107,38 @@ python -m black .
 
 ### Kubernetes
 
-#### Build flask-app image before run k8 deployments
-
-```sh
-docker build --name postgres_workshops -e POSTGRES_DB=dev_database -e POSTGRES_USER=dev_user -e POSTGRES_PASSWORD=dev_pass -p 5432:5432 -d postgres:14
-```
+Apply k8 resources
 
 ```sh
 kubectl apply -f .\postgres-config.yaml
-```
-
-```sh
 kubectl apply -f .\postgres-secret.yaml
+kubectl apply -f .\postgres.yaml
+kubectl apply -f .\flask-app.yaml
 ```
 
-```sh
-kubectl apply -f .\postgres.yaml  
-```
+Delete k8 resources
 
 ```sh
-kubectl apply -f .\flask-app.yaml  
+kubectl delete -f .\postgres-config.yaml
+kubectl delete -f .\postgres-secret.yaml
+kubectl delete -f .\postgres.yaml
+kubectl delete -f .\flask-app.yaml
+```
+
+<hr />
+
+### Show node description to get IP adress to access web app running on k8 pod
+
+Through ```INTERNAL-IP``` given by below command we can access out web app
+
+```sh
+kubectl get node -o wide
+```
+
+### Build flask-app image
+
+```sh
+docker build -t flask-app:v1 .
 ```
 
 <hr />
