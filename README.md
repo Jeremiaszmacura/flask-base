@@ -27,22 +27,22 @@ Set-ExecutionPolicy Unrestricted -Scope Process
 Linux/MacOS
 
 ```sh
-export FLASK_APP=flaskr/app.py
-export FLASK_DEBUG=true
+export FLASK_APP=flaskr/run.py
+export FLASK_DEBUG="True"
 ```
 
 Windows cmd
 
 ```sh
-set FLASK_APP=flaskr/app.py
-set FLASK_DEBUG=true
+set FLASK_APP=flaskr/run.py
+set FLASK_DEBUG="True"
 ```
 
 Windows powershell
 
 ```sh
-$env:FLASK_APP = "flaskr/app.py"
-$env:FLASK_APP = "true"
+$env:FLASK_APP="flaskr/run.py"
+$env:FLASK_DEBUG="True"
 ```
 
 Install app as library in development mode using setuptool
@@ -62,7 +62,7 @@ python setup.py bdist_wheel
 ### Run PosgreSQL database as container
 
 ```sh
-docker run --name postgres_workshops -e POSTGRES_DB=dev_database -e POSTGRES_USER=dev_user -e POSTGRES_PASSWORD=dev_user -p 5432:5432 -d postgres:14
+docker run --name postgres_workshops -e POSTGRES_DB=dev_database -e POSTGRES_USER=dev_user -e POSTGRES_PASSWORD=dev_pass -p 5432:5432 -d postgres:14
 ```
 
 <hr />
@@ -82,3 +82,59 @@ pytest tests
 ```
 
 <hr />
+
+### Run linter
+
+Pytlint
+
+```sh
+python -m pylint flaskr tests
+```
+
+Black check
+
+```sh
+python -m black --check .
+```
+
+Black fix
+
+```sh
+python -m black .
+```
+
+<hr />
+
+### Kubernetes
+
+#### Build flask-app image before run k8 deployments
+
+```sh
+docker build --name postgres_workshops -e POSTGRES_DB=dev_database -e POSTGRES_USER=dev_user -e POSTGRES_PASSWORD=dev_pass -p 5432:5432 -d postgres:14
+```
+
+```sh
+kubectl apply -f .\postgres-config.yaml
+```
+
+```sh
+kubectl apply -f .\postgres-secret.yaml
+```
+
+```sh
+kubectl apply -f .\postgres.yaml  
+```
+
+```sh
+kubectl apply -f .\flask-app.yaml  
+```
+
+<hr />
+
+### URLs
+
+App
+
+```text
+http://localhost:5000/
+```
